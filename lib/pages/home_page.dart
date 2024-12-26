@@ -19,16 +19,68 @@ class HomePage extends StatelessWidget {
         backgroundColor: Colors.grey[900],
         actions: [
           IconButton(
+            icon: Icon(Icons.account_circle),
+            onPressed: () {
+              // Navigate to profile page
+            },
+          ),
+          IconButton(
             onPressed: signUserOut,
             icon: Icon(Icons.logout),
           )
         ],
       ),
-      body: Center(
-          child: Text(
-        "LOGGED IN AS: ${user.email!}",
-        style: TextStyle(fontSize: 20),
-      )),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Greeting or App Name
+            Text(
+              'Welcome Back!',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 20),
+            // Quiz Categories
+            ElevatedButton(
+              onPressed: () {
+                // Navigate to quiz categories
+              },
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(vertical: 16),
+                textStyle: TextStyle(fontSize: 18),
+              ),
+              child: Text('Quiz Categories'),
+            ),
+            SizedBox(height: 10),
+            // Play Single Player
+            ElevatedButton(
+              onPressed: () {
+                // Navigate to single player quiz
+              },
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(vertical: 16),
+                textStyle: TextStyle(fontSize: 18),
+              ),
+              child: Text('Play Single Player'),
+            ),
+            SizedBox(height: 10),
+            // Play with a Friend
+            ElevatedButton(
+              onPressed: () {
+                // Navigate to multiplayer quiz
+              },
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(vertical: 16),
+                textStyle: TextStyle(fontSize: 18),
+              ),
+              child: Text('Play with a Friend'),
+            ),
+            Spacer(),
+          ],
+        ),
+      ),
     );
   }
 }
