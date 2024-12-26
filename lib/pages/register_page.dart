@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:quizapp/components/my_button.dart';
 import 'package:quizapp/components/my_textfield.dart';
 import 'package:quizapp/components/square_tile.dart';
+import 'package:quizapp/Services/auth_service.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;
@@ -189,14 +190,20 @@ class _RegisterPageState extends State<RegisterPage> {
                 // google + apple sign in buttons
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     // google button
-                    SquareTile(imagePath: 'lib/images/google.png'),
+                    SquareTile(
+                      onTap: () => AuthService().signInWithGoogle(),
+                      imagePath: 'lib/images/google.png',
+                    ),
 
-                    SizedBox(width: 25),
+                    const SizedBox(width: 25),
 
                     // apple button
-                    SquareTile(imagePath: 'lib/images/apple.png')
+                    SquareTile(
+                      imagePath: 'lib/images/apple.png',
+                      onTap: () {},
+                    )
                   ],
                 ),
 
