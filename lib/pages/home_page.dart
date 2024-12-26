@@ -1,5 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'profile_page.dart';
+import 'quiz_categories_page.dart';
+import 'single_player_quiz_page.dart';
+import 'multiplayer_quiz_page.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -22,6 +26,10 @@ class HomePage extends StatelessWidget {
             icon: Icon(Icons.account_circle),
             onPressed: () {
               // Navigate to profile page
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfilePage()),
+              );
             },
           ),
           IconButton(
@@ -46,6 +54,10 @@ class HomePage extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Navigate to quiz categories
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => QuizCategoriesPage()),
+                );
               },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(vertical: 16),
@@ -58,6 +70,10 @@ class HomePage extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Navigate to single player quiz
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SinglePlayerPage()),
+                );
               },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(vertical: 16),
@@ -70,6 +86,10 @@ class HomePage extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Navigate to multiplayer quiz
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MultiplayerPage()),
+                );
               },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(vertical: 16),
