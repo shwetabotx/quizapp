@@ -41,6 +41,7 @@ dependencies:
   firebase_auth: ^5.3.4
   google_sign_in: ^6.2.2
   
+  
 
 dev_dependencies:
   flutter_test:
@@ -94,4 +95,3 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
-  
