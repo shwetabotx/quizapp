@@ -31,6 +31,16 @@ class _SinglePlayerPageState extends State<SinglePlayerPage> {
       'answers': ['Earth', 'Jupiter', 'Mars', 'Saturn'],
       'correctAnswer': 'Jupiter',
     },
+    {
+      'question': 'What is the surname of shweta?',
+      'answers': ['Zala', 'Jadeja', 'Parmar', 'Solanki'],
+      'correctAnswer': 'Jadeja',
+    },
+    {
+      'question': 'konse color ki chaddi pehne ho ? hmmm...',
+      'answers': ['Red', 'Green', 'Pink', 'Blue'],
+      'correctAnswer': 'Pink',
+    },
   ];
 
   int _currentQuestionIndex = 0;
