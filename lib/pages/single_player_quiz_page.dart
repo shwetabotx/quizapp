@@ -32,23 +32,23 @@ class _SinglePlayerPageState extends State<SinglePlayerPage> {
       'correctAnswer': 'Jupiter',
     },
     {
-      'question': 'What is the surname of shweta?',
+      'question': 'What is the surname of Shweta?',
       'answers': ['Zala', 'Jadeja', 'Parmar', 'Solanki'],
       'correctAnswer': 'Jadeja',
     },
-    {
-      'question': 'konse color ki chaddi pehne ho ? hmmm...',
+    /*{
+      'question': 'Konse color ki chaddi pehne ho? Hmmm...',
       'answers': ['Red', 'Green', 'Pink', 'Blue'],
       'correctAnswer': 'Pink',
-    },
+    },*/
   ];
 
   int _currentQuestionIndex = 0;
   int _score = 0;
   bool _isAnswerSelected = false;
+  String _selectedAnswer = "";
   late Timer _timer;
   int _timerSeconds = 10;
-  String _selectedAnswer = "";
 
   @override
   void initState() {
@@ -78,7 +78,7 @@ class _SinglePlayerPageState extends State<SinglePlayerPage> {
         _currentQuestionIndex++;
         _timerSeconds = 10;
         _isAnswerSelected = false;
-        _selectedAnswer = ""; // Reset the selected answer
+        _selectedAnswer = "";
       });
       _stopTimer();
       _startTimer();
@@ -92,18 +92,24 @@ class _SinglePlayerPageState extends State<SinglePlayerPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text("Quiz Finished",
-            style: TextStyle(fontWeight: FontWeight.bold)),
-        content: Text("Your final score is $_score/${_questions.length}.",
-            style: TextStyle(fontSize: 18)),
+        title: Text(
+          "Quiz Finished",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        content: Text(
+          "Your final score is $_score/${_questions.length}.",
+          style: TextStyle(fontSize: 18),
+        ),
         actions: [
           TextButton(
             onPressed: () {
               Navigator.pop(context);
               Navigator.pop(context);
             },
-            child: Text("OK",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            child: Text(
+              "OK",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
           ),
         ],
       ),
@@ -124,7 +130,10 @@ class _SinglePlayerPageState extends State<SinglePlayerPage> {
         });
       }
 
-      Future.delayed(Duration(seconds: 2), _nextQuestion);
+      // Delay before moving to the next question
+      Future.delayed(Duration(seconds: 2), () {
+        _nextQuestion();
+      });
     }
   }
 
@@ -134,8 +143,10 @@ class _SinglePlayerPageState extends State<SinglePlayerPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Single Player Quiz",
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+        title: Text(
+          "Single Player Quiz",
+          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+        ),
         backgroundColor: Colors.deepPurpleAccent,
         flexibleSpace: Container(
           decoration: BoxDecoration(
@@ -158,9 +169,10 @@ class _SinglePlayerPageState extends State<SinglePlayerPage> {
             Text(
               "Time: $_timerSeconds s",
               style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.deepPurpleAccent),
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+                color: Colors.deepPurpleAccent,
+              ),
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 20),
@@ -168,9 +180,10 @@ class _SinglePlayerPageState extends State<SinglePlayerPage> {
             Text(
               currentQuestion['question'] as String,
               style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87),
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 40),
@@ -179,10 +192,12 @@ class _SinglePlayerPageState extends State<SinglePlayerPage> {
               AnimatedButton(
                 onPressed: () => _selectAnswer(answer),
                 text: answer,
-                isSelected: _isAnswerSelected && _selectedAnswer == answer,
-                isCorrect: answer ==
-                    _questions[_currentQuestionIndex]['correctAnswer'],
-                isIncorrect: answer == _selectedAnswer &&
+                isSelected: _selectedAnswer == answer,
+                isCorrect: _isAnswerSelected &&
+                    answer ==
+                        _questions[_currentQuestionIndex]['correctAnswer'],
+                isIncorrect: _isAnswerSelected &&
+                    answer == _selectedAnswer &&
                     answer !=
                         _questions[_currentQuestionIndex]['correctAnswer'],
               ),
@@ -191,9 +206,10 @@ class _SinglePlayerPageState extends State<SinglePlayerPage> {
             Text(
               "Score: $_score/${_questions.length}",
               style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black54),
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.black54,
+              ),
               textAlign: TextAlign.center,
             ),
           ],
@@ -237,7 +253,7 @@ class AnimatedButton extends StatelessWidget {
             ? (isCorrect
                 ? Colors.green
                 : (isIncorrect ? Colors.red : Colors.deepPurpleAccent))
-            : Colors.deepPurpleAccent,
+            : (isCorrect ? Colors.green : Colors.deepPurpleAccent),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.2),
@@ -250,16 +266,18 @@ class AnimatedButton extends StatelessWidget {
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.symmetric(vertical: 15),
-          backgroundColor:
-              Colors.transparent, // We use the decoration color here
+          backgroundColor: Colors.transparent,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          shadowColor: Colors.transparent, // To remove the shadow of the button
+          shadowColor: Colors.transparent,
         ),
         child: Text(
           text,
           style: TextStyle(
-              fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
         ),
       ),
     );
