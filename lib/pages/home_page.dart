@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'profile_page.dart';
+import 'single_player_quiz_page.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -56,6 +57,11 @@ class HomePage extends StatelessWidget {
               subtitle: "Play the quiz smarty",
               icon: Icons.emoji_people_outlined,
               onTap: () {
+                // Navigate to single player quiz
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SinglePlayerPage()),
+                );
                 debugPrint("Single Player Mode Clicked!");
               },
             ),
