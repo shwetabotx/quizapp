@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'profile_page.dart';
 import 'single_player_quiz_page.dart';
+import 'category_page.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -60,7 +61,7 @@ class HomePage extends StatelessWidget {
                 // Navigate to single player quiz
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SinglePlayerPage()),
+                  MaterialPageRoute(builder: (context) => CategoryPage()),
                 );
                 debugPrint("Single Player Mode Clicked!");
               },

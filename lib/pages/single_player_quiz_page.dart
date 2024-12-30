@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class SinglePlayerPage extends StatefulWidget {
   const SinglePlayerPage({super.key});
@@ -10,50 +12,54 @@ class SinglePlayerPage extends StatefulWidget {
 }
 
 class _SinglePlayerPageState extends State<SinglePlayerPage> {
-  final List<Map<String, Object>> _questions = [
-    {
-      'question': 'What is the capital of France?',
-      'answers': ['Paris', 'London', 'Berlin', 'Madrid'],
-      'correctAnswer': 'Paris',
-    },
-    {
-      'question': 'Who wrote "1984"?',
-      'answers': [
-        'George Orwell',
-        'J.K. Rowling',
-        'F. Scott Fitzgerald',
-        'Ernest Hemingway'
-      ],
-      'correctAnswer': 'George Orwell',
-    },
-    {
-      'question': 'What is the largest planet in our solar system?',
-      'answers': ['Earth', 'Jupiter', 'Mars', 'Saturn'],
-      'correctAnswer': 'Jupiter',
-    },
-    {
-      'question': 'What is the surname of Shweta?',
-      'answers': ['Zala', 'Jadeja', 'Parmar', 'Solanki'],
-      'correctAnswer': 'Jadeja',
-    },
-    /*{
-      'question': 'Konse color ki chaddi pehne ho? Hmmm...',
-      'answers': ['Red', 'Green', 'Pink', 'Blue'],
-      'correctAnswer': 'Pink',
-    },*/
-  ];
-
+  List<Map<String, Object>> _questions = [];
   int _currentQuestionIndex = 0;
   int _score = 0;
   bool _isAnswerSelected = false;
   String _selectedAnswer = "";
   late Timer _timer;
   int _timerSeconds = 10;
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _startTimer();
+    _fetchQuestions();
+  }
+
+  Future<void> _fetchQuestions() async {
+    const url = 'https://opentdb.com/api.php?amount=10&type=multiple';
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        setState(() {
+          _questions = (data['results'] as List)
+              .map((question) {
+                final incorrectAnswers = (question['incorrect_answers'] as List)
+                    .map((e) => e as Object)
+                    .toList();
+                final correctAnswer = question['correct_answer'] as Object;
+                final allAnswers = [...incorrectAnswers, correctAnswer];
+                allAnswers.shuffle();
+                return {
+                  'question': question['question'] as Object,
+                  'answers': allAnswers,
+                  'correctAnswer': correctAnswer,
+                };
+              })
+              .toList()
+              .cast<Map<String, Object>>();
+          _isLoading = false;
+          _startTimer();
+        });
+      } else {
+        throw Exception('Failed to load questions');
+      }
+    } catch (error) {
+      // ignore: avoid_print
+      print('Error fetching questions: $error');
+    }
   }
 
   void _startTimer() {
@@ -139,6 +145,18 @@ class _SinglePlayerPageState extends State<SinglePlayerPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text("Single Player Quiz"),
+          backgroundColor: Colors.deepPurpleAccent,
+        ),
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
     final currentQuestion = _questions[_currentQuestionIndex];
 
     return Scaffold(
@@ -188,18 +206,16 @@ class _SinglePlayerPageState extends State<SinglePlayerPage> {
             ),
             SizedBox(height: 40),
             // Answer buttons
-            for (var answer in currentQuestion['answers'] as List<String>)
+            for (var answer in currentQuestion['answers'] as List<Object>)
               AnimatedButton(
                 onPressed: () => _selectAnswer(answer),
-                text: answer,
+                text: answer as String,
                 isSelected: _selectedAnswer == answer,
                 isCorrect: _isAnswerSelected &&
-                    answer ==
-                        _questions[_currentQuestionIndex]['correctAnswer'],
+                    answer == currentQuestion['correctAnswer'],
                 isIncorrect: _isAnswerSelected &&
                     answer == _selectedAnswer &&
-                    answer !=
-                        _questions[_currentQuestionIndex]['correctAnswer'],
+                    answer != currentQuestion['correctAnswer'],
               ),
             Spacer(),
             // Current score
