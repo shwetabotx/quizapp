@@ -71,6 +71,11 @@ class HomePage extends StatelessWidget {
               subtitle: "Let us see how much have you learned!",
               icon: Icons.school,
               onTap: () {
+                // Navigate to single player quiz
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CategoryPage()),
+                );
                 debugPrint("Exam Mode clicked!");
               },
             ),
@@ -97,6 +102,11 @@ class HomePage extends StatelessWidget {
               subtitle: "Play and get smarter everyday",
               icon: Icons.assignment_rounded,
               onTap: () {
+                // Navigate to single player quiz
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CategoryPage()),
+                );
                 debugPrint("Fun 'N' Learn clicked!");
               },
             ),
@@ -105,6 +115,11 @@ class HomePage extends StatelessWidget {
               subtitle: "Fun vocabulary game",
               icon: Icons.abc,
               onTap: () {
+                // Navigate to single player quiz
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CategoryPage()),
+                );
                 debugPrint("Guess The Word clicked!");
               },
             ),
@@ -113,6 +128,11 @@ class HomePage extends StatelessWidget {
               subtitle: "Quiz with audio",
               icon: Icons.multitrack_audio_sharp,
               onTap: () {
+                // Navigate to single player quiz
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CategoryPage()),
+                );
                 debugPrint("Audio Questions clicked!");
               },
             ),
@@ -121,6 +141,11 @@ class HomePage extends StatelessWidget {
               subtitle: "Yay Or Nay?",
               icon: Icons.close,
               onTap: () {
+                // Navigate to single player quiz
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CategoryPage()),
+                );
                 debugPrint("True/False Questions clicked!");
               },
             ),
