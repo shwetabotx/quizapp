@@ -4,6 +4,7 @@ import 'package:quizapp/components/my_button.dart';
 import 'package:quizapp/components/my_textfield.dart';
 import 'package:quizapp/components/square_tile.dart';
 import 'package:quizapp/Services/auth_service.dart';
+import 'package:quizapp/pages/forgot_password_page.dart';
 
 class LoginPage extends StatefulWidget {
   final Function()? onTap;
@@ -139,9 +140,20 @@ class _LoginPageState extends State<LoginPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(
-                        'Forgot Password?',
-                        style: TextStyle(color: Colors.grey[600]),
+                      GestureDetector(
+                        onTap: () {
+                          // Navigate to single player quiz
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ForgotPasswordPage()),
+                          );
+                        },
+                        child: Text(
+                          'Forgot Password?',
+                          style: TextStyle(
+                              color: Colors.blue, fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ],
                   ),
